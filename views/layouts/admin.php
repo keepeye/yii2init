@@ -13,6 +13,7 @@ use yii\helpers\Html;
     <meta name="author" content="">
     <title>后台管理</title>
     <link href="<?=Url::to('/static/admin/css/style.default.css');?>" rel="stylesheet">
+    <link href="<?=Url::to('/static/admin/css/custom.css');?>" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="<?=Url::to('/static/admin/js/html5shiv.js');?>"></script>
@@ -42,13 +43,15 @@ use yii\helpers\Html;
             <h5 class="sidebartitle">导航</h5>
             <ul class="nav nav-pills nav-stacked nav-bracket">
                 <li><a href="<?=Url::toRoute('/admin/index');?>"><i class="fa fa-home"></i> <span>后台首页</span></a></li>
-                <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>菜单组</span></a>
+                <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>系统用户</span></a>
+                    <ul class="children">
+                        <li><a href="<?=Url::to(['/admin/administrators']);?>"><i class="fa fa-caret-right"></i> 用户列表</a></li>
+                    </ul>
+                </li>
+                <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>其他菜单</span></a>
                     <ul class="children">
                         <li><a href="#"><i class="fa fa-caret-right"></i> 子菜单1</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right"></i> 子菜单2</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right"></i> 子菜单3</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right"></i> 子菜单4</a></li>
-                        <li><a href="#"><span class="pull-right badge badge-info">new</span><i class="fa fa-caret-right"></i> 子菜单5</a></li>
+                        <li><a href="#"><span class="pull-right badge badge-info">new</span><i class="fa fa-caret-right"></i> 子菜单2</a></li>
                     </ul>
                 </li>
             </ul>
@@ -67,7 +70,7 @@ use yii\helpers\Html;
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 帐号设置</a></li>
+                                <li><a href="<?=Url::to(['admin/profile-settings/password']);?>"><i class="glyphicon glyphicon-cog"></i> 帐号设置</a></li>
                                 <li><a href="<?=Url::toRoute(['admin/auth/logout']);?>"><i class="glyphicon glyphicon-log-out"></i> 注销</a></li>
                             </ul>
                         </div>

@@ -74,4 +74,11 @@ class Administrator extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return Yii::$app->getSecurity()->validatePassword($password,$this->password);
     }
+
+    public function renewPassword($newpassword)
+    {
+        $password = Yii::$app->getSecurity()->generatePasswordHash($newpassword);
+        $this->password = $password;
+        return $this->save();
+    }
 }

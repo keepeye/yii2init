@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers\admin;
 
-use yii\filters\AccessControl;
+use Yii;
 
 /**
  * IndexController.php.
@@ -12,16 +12,9 @@ class IndexController extends ControllerBase
 {
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'user' => 'administrator',
-                'rules' => [
-                    ['allow' => false, 'roles' => ['?']],//游客禁止访问
-                    ['allow' => true, 'roles' => ['@']],//已登录用户允许访问
-                ],
-            ]
-        ];
+        return array_merge(parent::behaviors(),[
+
+        ]);
     }
 
     public function actionIndex()
