@@ -23,7 +23,7 @@ use yii\helpers\Html;
     <div class="panel-body">
         <?=Html::beginForm('','get',['class'=>'form-inline']);?>
             <div class="form-group">
-                <input type="text" class="form-control" name="search[username]" value="<?=Yii::$app->request->queryParams['search']['username'];?>" placeholder="请输入用户名">
+                <input type="text" class="form-control" name="search[username]" value="<?=\yii\helpers\ArrayHelper::getValue(Yii::$app->request->queryParams,'search.username');?>" placeholder="请输入用户名">
             </div>
             <button type="submit" class="btn btn-primary">搜 索</button>
         <?=Html::endForm();?>
