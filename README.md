@@ -9,3 +9,13 @@
 - 查看后台功能决定是否需要二次开发
 - 进行其他业务开发
 
+
+一些截图
+========
+
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-1%402x.png)
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-2%402x.png)
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-3%402x.png)
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-4%402x.png)
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-5%402x.png)
+![image](https://raw.githubusercontent.com/keepeye/yii2init/master/docs/images/QQ20160421-6%402x.png)
