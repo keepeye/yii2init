@@ -7,11 +7,43 @@ use Yii;
 
 class Administrator extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return '{{%administrators}}';
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => '用户名',
+            'name' => '姓名',
+            'password' => '密码',
+            'email' => '邮箱',
+            'phone' => '电话'
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['username','name'],'required'],
+            ['password','required','on'=>'insert'],
+            ['password','filterPassword','skipOnEmpty'=>false],
+            ['username','unique'],
+            ['username','match', 'pattern' => '/^[0-9a-z_]+$/i','message'=>'{attribute}只允许使用数字,字母,下划线组合'],
+            ['email','email'],
+            ['phone','match','pattern'=>'/^[0-9\-\+]+$/','message'=>'{attribute}不合法']
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -75,10 +107,42 @@ class Administrator extends ActiveRecord implements \yii\web\IdentityInterface
         return Yii::$app->getSecurity()->validatePassword($password,$this->password);
     }
 
+    /**
+     * 更新密码
+     *
+     * @param $newpassword
+     * @return bool
+     * @throws \yii\base\Exception
+     */
     public function renewPassword($newpassword)
     {
-        $password = Yii::$app->getSecurity()->generatePasswordHash($newpassword);
-        $this->password = $password;
+        $this->password = $newpassword;
         return $this->save();
+    }
+
+    public function filterPassword($attribute,$params)
+    {
+        //密码不为空的时候才更新密码,否则不作任何改动
+        if ($this->$attribute != "") {
+            $this->$attribute = Yii::$app->getSecurity()->generatePasswordHash($this->$attribute);
+        } else {
+            $this->$attribute = $this->getOldAttribute('password');
+        }
+    }
+
+    /**
+     * 保存前的事件
+     *
+     * @param bool $insert
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert)
+    {
+        //创建时间
+        if ($insert) {
+            $this->created_at = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);
     }
 }

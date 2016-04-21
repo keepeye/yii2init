@@ -337,6 +337,11 @@ jQuery(document).ready(function() {
    jQuery('.dropdown-menu').find('form').click(function (e) {
       e.stopPropagation();
     });
-      
 
+   //ajax csrf token verify
+   $.ajaxSetup({
+      headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+   });
 });

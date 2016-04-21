@@ -25,12 +25,9 @@ use yii\helpers\Html;
     <?php $this->head() ?>
 </head>
 
-<body>
+<body style="overflow: visible;">
 <?php $this->beginBody() ?>
-<!-- 页面加载中 -->
-<div id="preloader">
-    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
-</div>
+
 <section>
 
     <div class="leftpanel">
@@ -41,17 +38,18 @@ use yii\helpers\Html;
 
         <div class="leftpanelinner">
             <h5 class="sidebartitle">导航</h5>
-            <ul class="nav nav-pills nav-stacked nav-bracket">
+            <ul class="nav nav-pills nav-stacked nav-bracket" id="sidemenus">
                 <li><a href="<?=Url::toRoute('/admin/index');?>"><i class="fa fa-home"></i> <span>后台首页</span></a></li>
                 <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>系统用户</span></a>
                     <ul class="children">
-                        <li><a href="<?=Url::to(['/admin/administrators']);?>"><i class="fa fa-caret-right"></i> 用户列表</a></li>
+                        <li><a href="<?=Url::to(['/admin/administrators/index']);?>"><i class="fa fa-caret-right"></i> 用户列表</a></li>
+                        <li><a href="<?=Url::to(['/admin/administrators/logs']);?>"><i class="fa fa-caret-right"></i> 登录日志</a></li>
                     </ul>
                 </li>
                 <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>其他菜单</span></a>
                     <ul class="children">
-                        <li><a href="#"><i class="fa fa-caret-right"></i> 子菜单1</a></li>
-                        <li><a href="#"><span class="pull-right badge badge-info">new</span><i class="fa fa-caret-right"></i> 子菜单2</a></li>
+                        <li><a  href="#"><i class="fa fa-caret-right"></i> 子菜单1</a></li>
+                        <li><a  href="#"><span class="pull-right badge badge-info">new</span><i class="fa fa-caret-right"></i> 子菜单2</a></li>
                     </ul>
                 </li>
             </ul>
@@ -79,6 +77,11 @@ use yii\helpers\Html;
             </div><!-- 头部右侧 -->
 
         </div><!-- 头部 -->
+
+        <?php if (isset($this->blocks['breadcrumb'])): ?>
+            <?= $this->blocks['breadcrumb'] ?>
+        <?php endif; ?>
+
         <div class="contentpanel">
             <?= $content ?>
         </div>
@@ -93,8 +96,32 @@ use yii\helpers\Html;
 <script src="<?=Url::to('/static/admin/js/toggles.min.js');?>"></script>
 <script src="<?=Url::to('/static/admin/js/retina.min.js');?>"></script>
 <script src="<?=Url::to('/static/admin/js/jquery.cookies.js');?>"></script>
+<script src="<?=Url::to('/static/jquery-form/jquery.form.min.js');?>"></script>
 <script src="<?=Url::to('/static/admin/js/custom.js');?>"></script>
 
+<script>
+    //菜单状态管理
+    function menuActive(pid){
+        var sessId = pid+'_sess_href';
+        var sidebar = $(pid);
+        if (sessionStorage[sessId]) {
+            var anchor = sidebar.find("a[href='"+sessionStorage[sessId]+"']");
+            anchor.parent().addClass('active');
+            if (anchor.parent().parent().hasClass('nav') == false) {
+                anchor.parent().parent().css('display','block');
+                anchor.parent().parent().parent().addClass("active nav-active");
+            }
+        } else {
+            sidebar.find("ul").eq(0).addClass('in');
+        }
+        //检测session
+        sidebar.find("li a").click(function(){
+            var href = $(this).attr('href');
+            sessionStorage[sessId] = href;
+        });
+    }
+    menuActive('#sidemenus');
+</script>
 <?php if (isset($this->blocks['footer'])): ?>
     <?= $this->blocks['footer'] ?>
 <?php endif; ?>

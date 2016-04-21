@@ -25,35 +25,48 @@ abstract class ControllerBase extends Controller
                     ['allow' => false, 'roles' => ['?']],//游客禁止访问
                     ['allow' => true, 'roles' => ['@']],//已登录用户允许访问
                 ],
-            ],
-            //设置响应内容自动转换json
-            [
-                'class' => ContentNegotiator::className(),
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                    'text/html' => Response::FORMAT_HTML,
-                    '*/*' => Response::FORMAT_RAW
-                ],
-            ],
+            ]
         ];
     }
 
+    /**
+     * ajax错误信息
+     *
+     * @param $message
+     * @param array $extra
+     * @return mixed
+     */
     public function error($message,$extra=[])
     {
         return $this->out(0,$message,$extra);
     }
 
+    /**
+     * ajax成功信息
+     *
+     * @param string $message
+     * @param array $extra
+     * @return mixed
+     */
     public function success($message="",$extra=[])
     {
         return $this->out(1,$message,$extra);
     }
 
+    /**
+     * ajax信息
+     *
+     * @param $status
+     * @param $message
+     * @param $extra
+     * @return mixed
+     */
     public function out($status,$message,$extra)
     {
         $data = ['status'=>$status,'message'=>$message];
         if (!empty($extra)) {
             $data = array_merge($data,$extra);
         }
-        return $data;
+        return json_encode($data);
     }
 }
