@@ -29,6 +29,13 @@ class AdministratorsController extends ControllerBase
     public function actionIndex()
     {
         $query = Administrator::find();
+        //搜索
+        $searchConditions = Yii::$app->request->get('search');
+        if (!empty($searchConditions)) {
+            if (!empty($searchConditions['username'])) {
+                $query->where('username like :username',[':username'=>'%'.$searchConditions['username'].'%']);
+            }
+        }
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount'=>$countQuery->count(),'defaultPageSize'=>20]);
         $list = $query->offset($pages->offset)->limit($pages->limit)->all();

@@ -5,6 +5,7 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  */
 use yii\helpers\Url;
+use yii\helpers\Html;
 ?>
 
 <?php $this->beginBlock('breadcrumb');//面包屑导航 ?>
@@ -55,12 +56,12 @@ use yii\helpers\Url;
         <div class="toolbar">
             <a href="<?=Url::to(['add']);?>" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> 新增</a>
             <div style="display: inline-block;margin-left:15px;">
-                <form class="form-inline" method='get' action="">
-                    <div class="form-group">
-                        <input type="text" name="search[refurl]" class="form-control" value="<?=isset($_GET['search']['refurl'])?$_GET['search']['refurl']:'';?>" placeholder="请输入关键词">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+                <?=Html::beginForm('','get',['class'=>'form-inline']);?>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search[username]" value="<?=\yii\helpers\ArrayHelper::getValue(Yii::$app->request->queryParams,'search.username');?>" placeholder="请输入用户名">
+                </div>
+                <button type="submit" class="btn btn-primary">搜 索</button>
+                <?=Html::endForm();?>
             </div>
         </div>
         <h4>系统用户列表</h4>
